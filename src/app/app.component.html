@@ -1,0 +1,48 @@
+<div id="app" [class]="darkTheme ? 'dark-theme' : 'light-theme'">
+  <mat-toolbar color="primary" class="mat-elevation-z6">
+    <mat-toolbar-row>
+      <div class="nav-icon" (click)="drawer.toggle()" [class.is-open]="drawer.opened">
+        <span></span><span></span><span></span>
+      </div>
+      <a id="clan-title" routerLink="home">{{clan.name}}</a>
+      <span class="nav-spacer"></span>
+      <button routerLink="apply" mat-button *ngIf="!mobile" title="Apply to {{clan.name}}">
+        Apply
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div id="app-content">
+    <mat-drawer-container>
+      <mat-drawer #drawer class="sidenav" mode="push">
+        <div class="sidenav-content">
+          <button mat-button routerLink="roster" (click)="drawer.toggle()" title="{{clan.name}} Roster">Roster</button>
+          <button mat-button routerLink="about" (click)="drawer.toggle()" title="About {{clan.name}}">About</button>
+          <button mat-button routerLink="videos" (click)="drawer.toggle()" title="{{clan.name}} Videos">Videos</button>
+          <button mat-button routerLink="apply" (click)="drawer.toggle()" title="Apply to {{clan.name}}">Apply</button>
+          <div class="themeToggle-wrap">
+            <mat-slide-toggle
+              class="themeToggle"
+              [checked]="this.darkTheme"
+              (change)="toggleTheme()"
+              >
+              Dark Theme
+            </mat-slide-toggle>
+          </div>
+        </div>
+      </mat-drawer>
+      <router-outlet></router-outlet>
+      <footer id="app-footer">
+        <div class="content">
+          <div class="row">
+            <div class="col-sm-8 col-xs-12">
+              <p style="margin-top:0;">Copyright ©<script>new Date().getFullYear()>2010&&document.write(new Date().getFullYear());</script>2018 {{clan.name}}. All Rights Reserved. All copyrights and trademarks remain property of their respective owners and are used for identification only.</p>
+            </div>
+            <div class="col-sm-3 col-sm-push-1 col-xs-12">
+              <button mat-raised-button color="accent" routerLink="apply" class="full-width" title="Apply to {{clan.name}}">Apply Today</button>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </mat-drawer-container>
+  </div>
+</div>

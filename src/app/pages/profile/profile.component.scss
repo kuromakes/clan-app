@@ -1,0 +1,132 @@
+@import "~src/assets/scss/includes";
+@import '~@angular/material/theming';
+
+:host {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.player-card {
+  margin-top: -$spacing-larger;
+  @include z-index-1;
+  .row {
+    width: 100%;
+  }
+  @media screen and (max-width: 960px) {
+    margin-top: -$spacing-largest;
+  }
+}
+.player-card-content {
+  display: flex;
+  align-items: center;
+  @media screen and (max-width: 960px) {
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+.player-title {
+  @include vertical-center;
+  h2 {
+    margin: 0 0 $spacing-smallest;
+  }
+  @media screen and (max-width: 960px) {
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 1.5em;
+    .player-icon {
+      margin-right: 0;
+      margin-bottom: $spacing-small;
+    }
+    .player-metadata {
+      text-align: center;
+    }
+  }
+}
+.player-icon {
+  border-radius: 50%;
+  margin-right: $spacing-small;
+  overflow: hidden;
+  width: 90px;
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+#rank {
+  margin-right: 1em;
+}
+#hours {
+  opacity: .5;
+}
+mat-card {
+  margin-bottom: 2em;
+}
+.characters-toggle {
+  @include vertical-center;
+  @include justify-end;
+  @media screen and (max-width: 960px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+#charactersToggleLabel {
+  margin: 0 1em 0 0;
+  @media screen and (max-width: 960px) {
+    margin: 0 0 1em;
+  }
+}
+.characterInfo {
+  margin-bottom: $spacing-large;
+}
+// character info section
+.characterInfo-character {
+  mat-panel-description {
+    justify-content: flex-end;
+  }
+}
+.characterInfo-row {
+  margin-bottom: $spacing-small;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.characterInfo-emblem {
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+#characterInfoStats {
+  margin-bottom: $spacing-small;
+}
+.characterInfo-stats {
+  @include vertical-center;
+}
+// stats
+.playerStats-pve,
+.playerStats-pvp {
+  overflow: hidden;
+  padding: $spacing-normal 0;
+}
+.playerStats-stat {
+  color: #fff;
+  height: 10vw;
+  max-height: 300px;
+  min-height: 150px;
+  padding: 1em;
+  h2,
+  h5 {
+    margin-top: 0;
+  }
+  h5 {
+    opacity: .6;
+  }
+}
+.emptyStats {
+  margin: $spacing-normal 0;
+}
+#sweeperBot {
+  display: block;
+  max-width: 100%;
+}

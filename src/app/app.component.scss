@@ -1,0 +1,119 @@
+@import "~src/assets/scss/includes";
+
+#app-content {
+  height: calc(100vh - 64px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  @media screen and (max-width: 599px) {
+    height: calc(100vh - 56px);
+  }
+}
+
+// main nav
+mat-toolbar {
+  position: relative;
+  @include z-index-2;
+}
+mat-drawer {
+  @include z-index-3;
+}
+.nav-spacer {
+  flex: 1 1 auto;
+}
+.nav-icon {
+  cursor: pointer;
+  display: inline-block;
+  height: 24px;
+  margin-right: $spacing-small;
+  position: relative;
+  width: 24px;
+  span {
+    display: block;
+    background: #fff;
+    position: absolute;
+    transition: 300ms ease-out;
+    &:nth-child(1) {
+      height: 1px;
+      top: 4px;
+      width: 24px;
+    }
+    &:nth-child(2) {
+      height: 1px;
+      top: 11px;
+      width: 16px;
+    }
+    &:nth-child(3) {
+      height: 1px;
+      top: 18px;
+      width: 12px;
+    }
+  }
+  &.is-open {
+    span {
+      top: 50%;
+      width: 100%;
+      &:nth-child(1) {
+        transform: translateY(-50%) rotate(135deg);
+      }
+      &:nth-child(2) {
+        transform: translateY(-50%) rotate(45deg);
+      }
+      &:nth-child(3) {
+        height: 0;
+        width: 0;
+        top: 18px;
+      }
+    }
+  }
+}
+
+#clan-title {
+  font-size: .8em;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+}
+
+// sidenav
+.sidenav {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+
+.sidenav-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  max-width: 300px;
+  padding: 2em 0;
+  button {
+    margin-bottom: 16px;
+    text-align: left;
+  }
+}
+
+.themeToggle-wrap {
+  padding: 0 16px;
+}
+
+.menu-white {
+  background-color: #fff;
+}
+
+::ng-deep mat-drawer-content {
+  display: flex;
+  flex-direction: column;
+  height: auto !important;
+  min-height: calc(100vh - 64px);
+  overflow: visible !important;
+}
+
+::ng-deep .mat-drawer-opened mat-drawer-content {
+  overflow: hidden;
+}
+
+#app-footer {
+  flex: 0;
+  padding: $spacing-larger 0;
+}

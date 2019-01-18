@@ -1,0 +1,19 @@
+@import "~src/assets/scss/includes";
+
+:host {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+mat-card {
+  margin: $spacing-large 0;
+  padding: $spacing-large $spacing-larger;
+  @media screen and (max-width: 599px) {
+    padding: $spacing-normal;
+  }
+}
+
+#apply-cta {
+  padding: $spacing-largest $spacing-small;
+}

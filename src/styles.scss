@@ -1,0 +1,61 @@
+html,
+body {
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+* {
+  font-family: 'Poppins', Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+}
+
+@import "./assets/scss/includes";
+@import "./assets/scss/kokkaku";
+@import "~node_modules/bootstrap-grid/dist/grid.min.css";
+// @import url('https://fonts.googleapis.com/css?family=Poppins');
+// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/theming';
+@include mat-core();
+// themes
+@import './assets/themes/light-theme';
+@import './assets/themes/dark-theme';
+@import './app/app.component.scss-theme';
+@import './app/pages/profile/profile.component.scss-theme';
+@import './app/pages/roster/roster.component.scss-theme';
+@import './assets/scss/overrides/styles.override.scss';
+
+@mixin custom-components-theme($theme) {
+  @include app-component-theme($theme);
+  @include profile-component-theme($theme);
+  @include roster-component-theme($theme);
+  @include hyperlinks-theme($theme);
+}
+
+@mixin content-block-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+  &[color="primary"] {
+    background-color: mat-color($primary);
+  }
+  &[color="accent"] {
+    background-color: mat-color($accent);
+  }
+}
+
+.light-theme {
+  @include angular-material-theme($light-theme);
+  @include custom-components-theme($light-theme);
+  .color-block {
+    @include content-block-theme($light-theme);
+  }
+}
+
+.dark-theme {
+  @include angular-material-theme($dark-theme);
+  @include custom-components-theme($dark-theme);
+  .color-block {
+    @include content-block-theme($dark-theme);
+  }
+}

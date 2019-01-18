@@ -1,0 +1,64 @@
+<app-hero
+  [bannerUrl]="'/assets/img/clan-hero-image-3.jpg'"
+  [title]="'Join ' + clan.name"
+></app-hero>
+<div class="content">
+  <mat-card>
+    <h2 class="accent-color centered">Apply to {{clan.name}}</h2>
+    <p class="centered">Enter your information below to be considered for membership. <strong>Discord account required</strong>.</p>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <strong>Is this the clan for me?</strong>
+        </mat-expansion-panel-header>
+        <ol>
+          <li>
+            <p>
+                <strong>Destiny is love, not life.</strong>
+            </p>
+            <p>Most of our members have jobs and play as much as they can. We get all the raids done. We have Luna's Howl. But if you're looking to World's First raids or grind day and night for Not Forgotten, we probably can't help you.</p>
+          </li>
+          <li>
+            <p>
+              <strong>If you self-identify as toxic, go somewhere else.</strong>
+            </p>
+            <p>If you think racist jokes are funny or that clan chat is the perfect place to endlessly spam distasteful memes, this isn't the clan for you. Most of us are just trying to chill after work, and that is not what we want to be around.</p>
+          </li>
+          <li>
+            <p>
+              <strong>Be an adult.</strong>
+            </p>
+            <p>No, like literally. You must be 18+ to join.</p>
+          </li>
+        </ol>
+      </mat-expansion-panel>
+      </mat-accordion>
+    <div class="applicationForm align-left">
+      <mat-form-field>
+        <input matInput placeholder="{{bungieService.parsePlatform(clan.platform)}} Username *" [(ngModel)]="playerName">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Discord (name#1234) *" name="discord" [(ngModel)]="discordName">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Referred by" [(ngModel)]="referral">
+      </mat-form-field>
+      <div id="age">
+          <mat-checkbox name="age" [(ngModel)]="age">I am 18 or older *</mat-checkbox>
+      </div>
+      <!-- enabled button -->
+      <button mat-flat-button color="accent" (click)="apply()" *ngIf="!sending">Submit</button>
+      <!-- button disabled during submission -->
+      <button mat-flat-button color="accent" disabled *ngIf="sending">Submit</button>
+      <div style="display: inline-block; margin-left: 1rem;" *ngIf="sending && applicationStatus != 'Success!'">
+        <mat-spinner diameter="16" color="accent"></mat-spinner>
+      </div>
+      <span *ngIf="applicationStatus" id="applicationStatus" style="margin-left: 1rem;">{{applicationStatus}}</span>
+    </div>
+  </mat-card>
+  <div class="row" style="margin-bottom: 4.263rem;">
+    <div class="col-md-6 col-md-push-3 col-xs-12 centered">
+      <p>Applications will be evaluated on a case-by-case basis by clan leadership. You will be contacted through Discord if approved.</p>
+    </div>
+  </div>
+</div>

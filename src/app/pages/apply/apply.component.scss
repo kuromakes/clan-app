@@ -1,0 +1,51 @@
+@import "~src/assets/scss/includes";
+
+:host {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.applicationForm {
+  margin: $spacing-normal auto;
+  max-width: 600px;
+  mat-form-field {
+    width: 100%;
+    display: block;
+  }
+}
+
+mat-card {
+  margin: $spacing-large 0;
+  padding: $spacing-large;
+}
+
+#sendingMessage {
+  opacity: .75;
+}
+
+#sendingMessage:after {
+  -webkit-animation: ellipsis steps(4,end) 900ms infinite;
+  animation: ellipsis steps(4,end) 900ms infinite;
+  content: "\2026";
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
+  width: 0px;
+}
+
+#age {
+  padding-bottom: $spacing-normal;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}

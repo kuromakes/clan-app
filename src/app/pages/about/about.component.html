@@ -1,0 +1,33 @@
+<app-hero [bannerUrl]="'/assets/img/clan-hero-image-1.jpg'" [title]="'About ' + clan.name"></app-hero>
+<div class="content">
+    <mat-card>
+        <div class="type-big">
+            <app-clan-bio></app-clan-bio>
+        </div>
+    </mat-card>
+    <section *ngIf="clan.faq.length">
+      <h2 class="accent-color centered">FAQ</h2>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let faq of clan.faq">
+            <mat-expansion-panel-header>
+                <mat-panel-title [innerHTML]="faq.question"></mat-panel-title>
+            </mat-expansion-panel-header>
+                <p [innerHTML]="faq.answer"></p>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </section>
+    <div
+        id="apply-cta"
+        class="centered"
+    >
+        <h2>Apply to {{clan.name}} Today!</h2>
+        <button
+            mat-raised-button
+            color="accent"
+            title="Apply to {{clan.name}}"
+            routerLink="/apply"
+        >
+            Apply
+        </button>
+    </div>
+</div>

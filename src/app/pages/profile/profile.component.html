@@ -1,0 +1,211 @@
+<app-hero *ngIf="profileData" [bannerUrl]="'https://www.bungie.net/img/UserThemes/'+ profileData.profileThemeName +'/header.jpg'"></app-hero>
+<div class="content">
+  <mat-card class="player-card mat-elevation-z4">
+    <mat-card-header>
+      <div class="row player-card-content">
+        <div class="col-md-6 col-xs-12">
+          <div class="player-title">
+            <div class="player-icon" *ngIf="profileData">
+              <img [src]="'https://www.bungie.net/' + profileData.profilePicturePath" alt="">
+            </div>
+            <div class="player-metadata">
+              <h2 *ngIf="profileData" class="accent-color">{{playerName}}</h2>
+              <span id="rank" *ngIf="metaData">{{clan.ranks[metaData.memberType]}}</span>
+              <span id="hours" *ngIf="hoursPlayed">{{hoursPlayed}}h</span>
+              <div *ngIf="destinyProfile"><span class="mat-caption">Last played {{destinyProfile.dateLastPlayed | date}}</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xs-12" *ngIf="characterIds && characterIds.length > 1">
+          <div class="characters-toggle">
+            <span id="charactersToggleLabel">Show info for</span>
+            <mat-button-toggle-group value="all">
+              <mat-button-toggle value="all" (click)="selectCharacter('all')">
+                All
+              </mat-button-toggle>
+              <mat-button-toggle value="{{character}}" *ngFor="let character of characterIds" (click)="selectCharacter(character)">
+                {{bungieService.parseCharacterClass(getCharacterProperty(character, 'classType'))}}
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+        </div>
+      </div>
+    </mat-card-header>
+  </mat-card>
+  <div class="row">
+    <div class="col-md-9 col-xs-12 col-md-push-3 playerStats">
+      <mat-tab-group dynamicHeight *ngIf="selectedStats && selectedStats !== 'undefined'" color="accent">
+        <mat-tab label="PvP">
+          <div class="playerStats-pvp" *ngIf="(selectedStats.allPvP | json) != ({} | json)">
+            <div class="playerStats-stat col-lg-4 col-sm-6 col-xs-12" id="kda">
+              <h5 class="display-4">KD</h5>
+              <h2 class="display-1">
+                {{selectedStats.allPvP.allTime.killsDeathsRatio.basic.displayValue | number:'1.1-2'}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-4 col-sm-6 col-xs-12" id="kda">
+              <h5 class="display-4">KDA</h5>
+              <h2 class="display-1">
+                {{selectedStats.allPvP.allTime.killsDeathsAssists.basic.displayValue | number:'1.1-2'}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-4 col-sm-6 col-xs-12" id="kda">
+              <h5 class="display-4">Efficiency</h5>
+              <h2 class="display-1">
+                {{selectedStats.allPvP.allTime.efficiency.basic.displayValue | number:'1.1-2'}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-4 col-sm-6 col-xs-12" id="kills">
+              <h5 class="display-4">Kills</h5>
+              <h2 class="display-1">
+                {{selectedStats.allPvP.allTime.kills.basic.displayValue | number}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-4 col-sm-6 col-xs-12" id="kills">
+              <h5 class="display-4">Assists</h5>
+              <h2 class="display-1">
+                {{selectedStats.allPvP.allTime.assists.basic.displayValue | number}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-4 col-sm-6 col-xs-12" id="kills">
+              <h5 class="display-4">Defeats</h5>
+              <h2 class="display-1">
+                {{selectedStats.allPvP.allTime.opponentsDefeated.basic.displayValue | number}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-3 col-sm-6 col-xs-12" id="kills">
+              <h5 class="display-4">Best Single Game Kills</h5>
+              <h2 class="display-1">
+                {{selectedStats.allPvP.allTime.bestSingleGameKills.basic.displayValue | number}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-3 col-sm-6 col-xs-12" id="kills">
+              <h5 class="display-4">Longest Kill Spree</h5>
+              <h2 class="display-1">
+                {{selectedStats.allPvP.allTime.longestKillSpree.basic.displayValue | number}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-3 col-sm-6 col-xs-12" id="kills">
+              <h5 class="display-4">Most Precision Kills</h5>
+              <h2 class="display-1">
+                {{selectedStats.allPvP.allTime.mostPrecisionKills.basic.displayValue | number}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-3 col-sm-6 col-xs-12" id="kills">
+              <h5 class="display-4">Best Weapon Type</h5>
+              <h2 class="display-1">
+                {{selectedStats.allPvP.allTime.weaponBestType.basic.displayValue}}
+              </h2>
+            </div>
+          </div>
+          <div class="emptyStats centered" *ngIf="!selectedStats || selectedStats == 'undefined'">
+              <mat-spinner diameter="48" color="accent" style="margin: 4rem auto;" *ngIf="!failedToLoadStats"></mat-spinner>
+              <img src="/assets/img/sweeper-bot.jpg" alt="" id="sweeperBot"  *ngIf="failedToLoadStats">
+          </div>
+        </mat-tab>
+        <mat-tab label="PvE">
+          <div class="playerStats-pve" *ngIf="(selectedStats.allPvE | json) != ({} | json)">
+            <div class="playerStats-stat col-lg-4 col-sm-6 col-xs-12" id="raidClears">
+              <h5 class="display-4">Raid Clears</h5>
+              <h2 class="display-1" *ngIf="(selectedStats.raid | json) != ({} | json)">
+                {{selectedStats.raid.allTime.activitiesCleared.basic.displayValue | number}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-4 col-sm-6 col-xs-12" id="raidKills">
+              <h5 class="display-4">Raid Kills</h5>
+              <h2 class="display-1" *ngIf="(selectedStats.raid | json) != ({} | json)">
+                {{selectedStats.raid.allTime.kills.basic.displayValue | number}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-4 col-sm-6 col-xs-12" id="raidKillsPerGame">
+              <h5 class="display-4">Kills Per Raid</h5>
+              <h2 class="display-1" *ngIf="(selectedStats.raid | json) != ({} | json)">
+                {{selectedStats.raid.allTime.kills.pga.displayValue | number:'1.1-2'}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-4 col-sm-6 col-xs-12" id="kills">
+              <h5 class="display-4">Best Raid Kills</h5>
+              <h2 class="display-1" *ngIf="(selectedStats.raid | json) != ({} | json)">
+                {{selectedStats.raid.allTime.bestSingleGameKills.basic.displayValue | number}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-4 col-sm-6 col-xs-12" id="kills">
+              <h5 class="display-4">Deaths Per Raid</h5>
+              <h2 class="display-1" *ngIf="(selectedStats.raid | json) != ({} | json)">
+                {{(selectedStats.raid.allTime.deaths.basic.displayValue / selectedStats.raid.allTime.activitiesEntered.basic.displayValue)  | number:'1.1-2'}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-4 col-sm-6 col-xs-12" id="kills">
+              <h5 class="display-4">Raid Time Per Clear</h5>
+              <h2 class="display-1" *ngIf="(selectedStats.raid | json) != ({} | json)">
+                {{bungieService.parseSeconds(selectedStats.raid.allTime.secondsPlayed.basic.value/selectedStats.raid.allTime.activitiesCleared.basic.value)}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-3 col-sm-6 col-xs-12" id="kills">
+              <h5 class="display-4">Strike Clears</h5>
+              <h2 class="display-1" *ngIf="(selectedStats.allStrikes | json) != ({} | json)">
+                {{selectedStats.allStrikes.allTime.activitiesCleared.basic.displayValue | number}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-3 col-sm-6 col-xs-12" id="kills">
+              <h5 class="display-4">Strike Kills</h5>
+              <h2 class="display-1" *ngIf="(selectedStats.allStrikes | json) != ({} | json)">
+                {{selectedStats.allStrikes.allTime.kills.basic.displayValue | number}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-3 col-sm-6 col-xs-12" id="kills">
+              <h5 class="display-4">Best Strike Kills</h5>
+              <h2 class="display-1" *ngIf="(selectedStats.allStrikes | json) != ({} | json)">
+                {{selectedStats.allStrikes.allTime.bestSingleGameKills.basic.displayValue | number}}
+              </h2>
+            </div>
+            <div class="playerStats-stat col-lg-3 col-sm-6 col-xs-12" id="kills">
+              <h5 class="display-4">Kills Per Strike</h5>
+              <h2 class="display-1" *ngIf="(selectedStats.allStrikes | json) != ({} | json)">
+                {{selectedStats.allStrikes.allTime.kills.pga.displayValue | number:'1.1-2'}}
+              </h2>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+      <div class="emptyStats centered" *ngIf="!selectedStats || selectedStats == 'undefined'">
+          <mat-spinner diameter="48" color="accent" style="margin: 4rem auto;" *ngIf="!failedToLoadStats"></mat-spinner>
+          <img src="/assets/img/sweeper-bot.jpg" alt="" id="sweeperBot"  *ngIf="failedToLoadStats">
+      </div>
+    </div>
+    <div class="col-md-3 col-xs-12 col-md-pull-9">
+      <div *ngIf="selectedCharactersData.length" class="characterInfo">
+        <mat-accordion *ngFor="let character of selectedCharactersData; let i = index;">
+          <mat-expansion-panel class="characterInfo-character">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <strong>{{bungieService.parseCharacterClass(getCharacterProperty(selectedCharactersData[i].characterId, 'classType'))}}</strong>
+              </mat-panel-title>
+              <mat-panel-description>
+                <span class="caption">{{character.light}} Light</span>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="characterInfo-emblem characterInfo-row">
+              <img [src]="'https://bungie.net/' + selectedCharactersData[i].emblemBackgroundPath" alt="">
+            </div>
+            <div class="characterInfo-row">{{bungieService.parseCharacterRace(character.raceType)}} {{bungieService.parseCharacterGender(character.genderType)}}</div>
+            <div class="row" id="characterInfoStats">
+              <div class="col-sm-4 col-xs-12 characterInfo-stats" title="Mobility">
+                <mat-icon color="accent">fast_forward</mat-icon>&nbsp;<span>{{character.stats['2996146975']}}</span>
+              </div>
+              <div class="col-sm-4 col-xs-12 characterInfo-stats" title="Resilience">
+                <mat-icon color="accent">favorite</mat-icon>&nbsp;<span>{{character.stats['392767087']}}</span>
+              </div>
+              <div class="col-sm-4 col-xs-12 characterInfo-stats" title="Recovery">
+                <mat-icon color="accent">restore</mat-icon>&nbsp;<span>{{character.stats['392767087']}}</span>
+              </div>
+            </div>
+            <div class="characterInfo-row">
+              <strong>Last played</strong>&nbsp;<span>{{character.dateLastPlayed | date}}</span>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </div>
+</div>
