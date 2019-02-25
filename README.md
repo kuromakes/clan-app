@@ -1,13 +1,17 @@
 # Destiny 2 Clan Website App
-This is an open source web application I built to help Destiny 2 players manage their clans.
+v1.0.0 - Jaunary 17, 2019
+
+This is an open source web application I built to help Destiny 2 players manage their clans. The app is built on Google's Angular framework, so if you're not familiar with web development principles, this process is going to feel quite complex and intimidating.
+
+But fear not! I've provided _very_ specific, step-by-step instructions to set this up. If you follow these instructions verbatim, you should find yourself with a beautiful Destiny 2 Clan Web App in no time.
 
 ## Features
 * Easy customizations in one central configuration file
 * Interactive clan roster. Have a large, multi-clan organization? No problem, the app turns it into one roster.
 * Individual player profiles with curated statistics, separated by PvP/PvE, and by character.
 * Independent clan application system with email notifications
-* Customizable light/dark themes
-* Runs on lightning Angular 7
+* Customizable light/dark themes (documentation on that coming soon)
+* Runs on Angular 7
 * Easy updates if/when I publish them
 * $0/month to run. The only recurring cost is the domain name.
 
@@ -38,9 +42,9 @@ The Bungie API is how we get all the data about our clan and its members, but we
 9. Repeat steps 1-8, but name it "{{YOUR_CLAN_NAME - Prod}}" and enter your **domain name** under Origin Header
 
 ## Setting up our Google Sheets "Database"
-This app runs without a formal back end for accessibility and simplicity. Instead of running a more traditional back end, we can use Google Sheets, for free!
+This app runs without a formal back end for accessibility and simplicity. Instead of running a more traditional back end, we can use Google Sheets for free!
 
-This part involves a lot of small details, so read thoroughly and carefully follow the steps.
+This part involves a lot of small details, so read thoroughly and follow the steps carefully.
 
 1. Sign into your clan Google account and go to [Google Sheets](https://sheets.google.com).
 2. Give your document a name, like "{{YOUR_CLAN_NAME}} Applications"
@@ -63,7 +67,7 @@ This part involves a lot of small details, so read thoroughly and carefully foll
 5. Go to Tools > Script Editor
   * Sometimes this lags out and you have to click Script Editor multiple times
 6. Change "_Untitled Project_" to "{{YOUR_CLAN_NAME}} Applications"
-7. Copy and paste the contents of `applications.gs` into the code editor
+7. Copy and paste the entire contents of `applications.gs` into the code editor
 8. Replace the placeholders in the `config` object:
   * Replace the `MY_SHEET_ID` placeholder with the key found in the URL of the spreadsheet. It should still be open in the other tab.
   * Get the `{{YOUR_SHEET_ID}}` out of `https://docs.google.com/spreadsheets/d/{{YOUR_SHEET_ID}}/edit#gid=0`
@@ -83,6 +87,8 @@ This part involves a lot of small details, so read thoroughly and carefully foll
   * After deploying, you'll see a text box labeled "Current web app URL"
   * `https://script.google.com/macros/s/{{YOUR_GOOGLE_KEY}}/exec`
 
+When players successfully submit an application, you should receive an email notification with all of the application data, and it will log the data to the spreadsheet.
+
 ## Installing the App Locally in Your Machine
 
 ### Download this Github Repository as a .zip file
@@ -96,27 +102,33 @@ Click "clone or download" and select "Download Zip" and pick a file location you
 3. **Install Microsoft VS Code**
   * This step is optional if you prefer a different IDE and know how to use the bash terminal, but if you plan to follow this guide step-by-step, installing it will make your life easier. Enable all the options during setup, especially the "open with code" one.
 
-### Serve the App Locally
-1. **Open the project in VS Code**
+### Configure Your Clan Info
+1. Open the project in VS Code
   * Find the github repo you downloaded earlier and unzip it. You'll see a new folder called "clan-app" when it's done. If you want to move the project somewhere else in your file system, now is a pretty good time. Open the folder "clan-app" with VS Code by right clicking on it. Or you can open up code first and find it through "Open Folder."
-2. **Configure VS Code Terminal**
-  * Press `ctrl`/`cmd` + `shift` + `P` and search for "default shell," then select "Git Bash
-  * Press `ctrl`/`cmd` + `\`` to bring up the bash terminal
-3. **Install npm dependencies**
-  * In the terminal, enter `npm i` and hit `enter`
-  * This will install all the dependencies that are listed in `package.json`
-  * It will likely warn you about vulnerabilities, so run `npm audit fix` next.
-4. Navigate to `src` > `index.html`
+2. Navigate to `src` > `index.html`
   * Add your clan name where the HTML comment implies, inside the `title` tag
-5. Navigate to `src` > `app` > `config` > `clan.config.ts`
-6. Replace all placeholder strings in the Clan class:
-  * If you followed the prerequisite instructions, it should be pretty self-explanatory as far as what goes where. There are also comments (grayed out text with `//` before it) in the file itself.
+3. Navigate to `src` > `app` > `config` > `clan.config.ts`
+4. Replace all placeholder strings in the Clan class:
+  * If you followed the prerequisite instructions, it should be pretty self-explanatory as far as what goes where. There are also comments (grayed out text with `//` before it) in the file itself to provide some direction.
   * To find your clan ID, log in to [Bungie.net](https://wwww.bungie.net) and navigate to your clan page. In the URL, there's a query parameter `?groupid=YOUR_CLAN_ID`. Copy and paste the number after the `=` over the placeholder in the `clanIds` array. If you have multiple sub-clans, you can enter them in separated by commas, but still inside quotes.
   * Make sure to enter the Bungie API keys for Dev and Prod respectively.
   * Enter the script ID we got from deploying the Google Sheets Web App earlier, _not_ the sheet ID from the spreadsheet URL.
-7. When running the app locally, make sure the **dev** API key is the one that is **not** commented out, and that the **prod** API key **is** commmented out.
-8. Open the bash terminal, make the file path includes the `clan-app` directory, and serve the app with the command: `ng serve`
-9. Open a browser (Google Chrome. Just use Google Chrome.) and navigate to `localhost:4200` and voila! There's your clan app, running in dev mode in your local environment.
+5. Navigate to `src` > `app` > `config` > `clan-bio` > `clan-bio.component.html`
+6. Replace the HTML content of that file with whatever you want your Clan Bio to be.
+
+### Serve the App Locally
+1. Open the project in VS Code
+2. Configure VS Code Terminal
+  * Press `ctrl`/`cmd` + `shift` + `P` and search for "default shell," then select "Git Bash
+  * Press `ctrl`/`cmd` + `\`` to bring up the bash terminal
+3. Install **npm dependencies**
+  * In the terminal, enter `npm i` and hit `enter`
+  * This will install all the dependencies that are listed in `package.json`
+  * It will likely warn you about vulnerabilities, so run `npm audit fix` next.
+4. When running the app locally, make sure the **dev** API key is the one that is **not** commented out, and that the **prod** API key **is** commmented out.
+  * You can comment/uncomment lines with the shortcut `cmd`/`ctrl` + `/`
+5. Open the bash terminal, make the file path includes the `clan-app` directory, and serve the app with the command: `ng serve`
+6. Open a browser (Google Chrome. Just use Google Chrome.) and navigate to `localhost:4200` and voila! There's your clan app, running in dev mode in your local environment.
 
 And there you go! You can now play around with your app on a local dev server. To stop the server, enter the command `ctrl` + `C`.
 
