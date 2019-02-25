@@ -1,7 +1,7 @@
 # Destiny 2 Clan Website App
 v1.0.0 - Jaunary 17, 2019
 
-This is an open source web application I built to help Destiny 2 players manage their clans. The app is built on Google's Angular framework, so if you're not familiar with web development principles, this process is going to feel quite complex and intimidating.
+This is an open source web application I built to help Destiny 2 players view info about their clans. The app is built on Google's Angular framework, so if you're not familiar with web development principles, this process is going to feel quite complex and intimidating.
 
 But fear not! I've provided _very_ specific, step-by-step instructions to set this up. If you follow these instructions verbatim, you should find yourself with a beautiful Destiny 2 Clan Web App in no time.
 
