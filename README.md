@@ -120,7 +120,7 @@ Click "clone or download" and select "Download Zip" and pick a file location you
 1. Open the project in VS Code
 2. Configure VS Code Terminal
   * Press `ctrl`/`cmd` + `shift` + `P` and search for "default shell," then select "Git Bash
-  * Press `ctrl`/`cmd` + `\`` to bring up the bash terminal
+  * Press `ctrl`/`cmd` + `` ` `` to bring up the bash terminal
 3. Install **npm dependencies**
   * In the terminal, enter `npm i` and hit `enter`
   * This will install all the dependencies that are listed in `package.json`
