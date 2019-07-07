@@ -155,6 +155,7 @@ Next we're going to install Firebase's NPM package so we can deploy our app dire
 2. Once this succeeds, we need to log in to our Google account from the command line. Run the command:
   `firebase login`
   Enter your Google credentials as prompted.
+3. Finally, run `firebase init` to generate the necessary files for Firebase to authenticate your application.
 
 ### Deploying Your App
 Deploying the app is surprisingly quick, but that doesn't mean it's an action you should take lightly. Test your app thoroughly on your local server before deploying to Firebase, and **always make sure the _prod_ API key is enabled before deploying**.
