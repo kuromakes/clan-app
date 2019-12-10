@@ -1,3 +1,7 @@
+# DEPECRATION NOTICE
+
+Hello! If you're reading this, thanks for checking out some of my work, but I have good news! This project has been re-written as a public application that provides most of this app's features, but for any clan. You can check out the new project [here](https://github.com/jesserogers/destiny2).
+
 # Destiny 2 Clan Website App
 v1.0.0 - February 25, 2019
 
